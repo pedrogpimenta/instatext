@@ -9,60 +9,72 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 class Item extends React.Component {
-  state = {
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: '',
-    currency: 'EUR',
-  };
+  constructor(props){
+    super(props)
+    this.state = {
+      id: this.props.id,
+      name: 'yes name',
+      currentContent: '',
+      newContent: ''
+    }
+  }
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
+    this.setState({
+      [name]: event.target.value
+    });
   };
 
-  render() {
-    const {
-      id,
-      name,
-      content
-    } = this.props;
+  handleConvert = () => {
+    console.log('ola');
+    console.log(this.state.currentContent);
+    const newVal = this.state.currentContent.replace(/(?:\r\n|\r|\n)/g, "\u2063\n");
+    console.log(newVal);
 
+    this.setState({
+      currentContent: newVal,
+      newContent: newVal
+    });
+  }
+
+  render() {
     return (
       <Card className={styles.card}>
-        {!content &&
+        {!this.props.content &&
           <CardContent>
             <TextField
-              id="standard-multiline-flexible"
-              label="Multiline"
+              id={this.state.id}
+              label='Insert content'
               multiline
-              value={this.state.multiline}
-              onChange={this.handleChange('multiline')}
+              value={this.state.currentContent}
+              onChange={this.handleChange('currentContent')}
               margin="normal"
             />
           </CardContent>
         }
-        {content &&
+        {this.props.content &&
           <CardContent>
             <Typography
               color='textPrimary'
               variant='body1'
               gutterBottom
             >
-              {content}
+              {this.props.content}
             </Typography>
           </CardContent>
         }
-        {!content &&
+        {!this.props.content &&
           <CardActions>
             <Button
               variant='contained'
               color='primary'
+              onClick={this.handleConvert}
             >
               Convert and copy to clipboard
             </Button>
           </CardActions>
         }
-        {content &&
+        {this.props.content &&
           <CardActions>
             <Button
               variant='contained'

@@ -25,7 +25,7 @@ class App extends Component {
       {
         id: 'item2',
         name: 'Item two',
-        content: 'This is content, fucker'
+        content: 'AA 11 BB 11 CC 11 DD 11'
       },
       {
         id: 'item3',
@@ -45,7 +45,7 @@ class App extends Component {
           <Grid
             container
             direction='column'
-            spacing='16' 
+            spacing={16} 
           >
             {items.map((item) => {
               return (
