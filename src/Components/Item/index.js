@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './index.module.css';
+import clipboard from 'clipboard-copy';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,12 +9,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
-class Item extends React.Component {
+class Item extends Component {
   constructor(props){
     super(props)
     this.state = {
       id: this.props.id,
-      name: 'yes name',
       currentContent: '',
       newContent: ''
     }
@@ -23,74 +23,99 @@ class Item extends React.Component {
     this.setState({
       [name]: event.target.value
     });
+
+    localStorage.setItem('currentItemInput', event.target.value);
   };
 
   handleConvert = () => {
-    console.log('ola');
-    console.log(this.state.currentContent);
     const newVal = this.state.currentContent.replace(/(?:\r\n|\r|\n)/g, "\u2063\n");
-    console.log(newVal);
 
     this.setState({
       currentContent: newVal,
       newContent: newVal
     });
+
+    this.copyToClipboard(newVal);
   }
 
+  copyToClipboard = (content) => {
+    clipboard(content);
+    console.log('copied');
+    console.log(content);
+  }
+
+  componentDidMount = () => {
+    const currentItemInput = localStorage.getItem('currentItemInput');
+
+    if (!!currentItemInput) {
+      this.setState({
+        currentContent: currentItemInput
+      })
+    }
+  };
+
   render() {
+    const {
+      content,
+      handleDeleteButton
+    } = this.props;
+
     return (
-      <Card className={styles.card}>
-        {!this.props.content &&
-          <CardContent>
-            <TextField
-              id={this.state.id}
-              label='Insert content'
-              multiline
-              value={this.state.currentContent}
-              onChange={this.handleChange('currentContent')}
-              margin="normal"
-            />
-          </CardContent>
+      <>
+        {!content &&
+          <Card className={styles.card}>
+            <CardContent>
+              <TextField
+                id={this.state.id}
+                label='Insert content'
+                multiline
+                fullWidth
+                variant='filled'
+                value={this.state.currentContent}
+                onChange={this.handleChange('currentContent')}
+              />
+            </CardContent>
+            <CardActions>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={this.handleConvert}
+              >
+                Convert and copy to clipboard
+              </Button>
+            </CardActions>
+          </Card>
         }
-        {this.props.content &&
-          <CardContent>
-            <Typography
-              color='textPrimary'
-              variant='body1'
-              gutterBottom
-            >
-              {this.props.content}
-            </Typography>
-          </CardContent>
+        {content &&
+          <Card className={styles.card}>
+            <CardContent>
+              <Typography
+                color='textPrimary'
+                variant='body2'
+                gutterBottom
+              >
+                {content}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                variant='outlined'
+                color='primary'
+                onClick={handleDeleteButton}
+              >
+                Delete
+              </Button>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={() => {this.copyToClipboard(content)}}
+              >
+                Copy to clipboard
+              </Button>
+            </CardActions>
+          </Card>
         }
-        {!this.props.content &&
-          <CardActions>
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={this.handleConvert}
-            >
-              Convert and copy to clipboard
-            </Button>
-          </CardActions>
-        }
-        {this.props.content &&
-          <CardActions>
-            <Button
-              variant='contained'
-              color='secondary'
-            >
-              Delete
-            </Button>
-            <Button
-              variant='contained'
-              color='primary'
-            >
-              Copy to clipboard
-            </Button>
-          </CardActions>
-        }
-      </Card>
+      </>
     );
   }
 }

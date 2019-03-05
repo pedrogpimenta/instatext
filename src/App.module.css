@@ -6,3 +6,24 @@
   margin: 0 auto;
   padding: 1rem;
 }
+
+.fabHolder {
+  box-sizing: border-box;
+  position: fixed;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100vw;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+.fab {
+  pointer-events: all;
+}
+
+.divider {
+  margin: 1rem 0;
+}
