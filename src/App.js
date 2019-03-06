@@ -97,61 +97,61 @@ class App extends Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-      <div className={styles.app}>
-        <Header
-          toggleSideMenu={this.toggleSideMenu} />
-        <SideMenu
-          open={this.state.sideMenuOpen}
-          toggleSideMenu={this.toggleSideMenu} />
-        <main className={styles.main}>
-          <Grid
-            container
-            direction='column'
-            spacing={16} 
-          >
-            <Grid item>
-              <Item
-                id='testest'
-                content=''
-                ref={this.newItem}
-              />
+        <div className={styles.app}>
+          <Header
+            toggleSideMenu={this.toggleSideMenu} />
+          <SideMenu
+            open={this.state.sideMenuOpen}
+            toggleSideMenu={this.toggleSideMenu} />
+          <main className={styles.main}>
+            <Grid
+              container
+              direction='column'
+              spacing={16} 
+            >
+              <Grid item>
+                <Item
+                  id='testest'
+                  content=''
+                  ref={this.newItem}
+                />
+              </Grid>
+              {(!!this.state.items || !!this.state.items.length) &&
+                <>
+                  <div className={styles.divider}>
+                    <Divider
+                      variant="middle" />
+                  </div>
+                  {this.state.items.map((item) => {
+                      return (
+                        <Grid
+                          item
+                          key={item.id}
+                        >
+                          <Item
+                            id={item.id}
+                            content={item.content}
+                            handleDeleteButton={() => {this.handleDeleteButton(item.id)}}
+                          />
+                        </Grid>
+                      )
+                    })
+                  }
+                </>
+              }
             </Grid>
-            {(!!this.state.items || !!this.state.items.length) &&
-              <>
-                <div className={styles.divider}>
-                  <Divider
-                    variant="middle" />
-                </div>
-                {this.state.items.map((item) => {
-                    return (
-                      <Grid
-                        item
-                        key={item.id}
-                      >
-                        <Item
-                          id={item.id}
-                          content={item.content}
-                          handleDeleteButton={() => {this.handleDeleteButton(item.id)}}
-                        />
-                      </Grid>
-                    )
-                  })
-                }
-              </>
-            }
-          </Grid>
-        </main>
-        <div className={styles.fabHolder}>
-          <Fab
-            color='secondary'
-            aria-label='New'
-            className={styles.fab}
-            onClick={this.handleNewButton}
-          >
-            <AddIcon />
-          </Fab>
+          </main>
+          <div className={styles.fabHolder}>
+            <Fab
+              color='secondary'
+              aria-label='New'
+              className={styles.fab}
+              onClick={this.handleNewButton}
+            >
+              <AddIcon />
+            </Fab>
+          </div>
         </div>
-      </div>
       </MuiThemeProvider>
     );
   }
