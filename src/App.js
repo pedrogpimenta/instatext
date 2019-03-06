@@ -37,25 +37,28 @@ class App extends Component {
   };
 
   handleNewButton = () => {
-    const instaTextLocalStorage = JSON.parse(localStorage.getItem(INSTA_TEXT_ITEMS));
-    const instaTextItemsLength = instaTextLocalStorage ? instaTextLocalStorage : 0; 
-
     const newItemContent = this.newItem.current.state.currentContent;
-    const items = this.state.items;
-    items.unshift({
-      id: instaTextItemsLength + 1,
-      content: newItemContent
-    });
 
-    localStorage.setItem(INSTA_TEXT_ITEMS, JSON.stringify(items));
-    localStorage.removeItem(CURRENT_ITEM_INPUT);
+    if (newItemContent.length) {
+      const instaTextLocalStorage = JSON.parse(localStorage.getItem(INSTA_TEXT_ITEMS));
+      const instaTextItemsLength = instaTextLocalStorage ? instaTextLocalStorage : 0; 
 
-    this.setState({
-      items: items 
-    });
-    this.newItem.current.setState(
-      {currentContent: ''
-    });
+      const items = this.state.items;
+      items.unshift({
+        id: instaTextItemsLength + 1,
+        content: newItemContent
+      });
+
+      localStorage.setItem(INSTA_TEXT_ITEMS, JSON.stringify(items));
+      localStorage.removeItem(CURRENT_ITEM_INPUT);
+
+      this.setState({
+        items: items 
+      });
+      this.newItem.current.setState(
+        {currentContent: ''
+      });
+    }
   };
 
   handleDeleteButton = id => {
