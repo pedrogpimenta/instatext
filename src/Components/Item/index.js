@@ -77,7 +77,6 @@ class Item extends Component {
             </CardContent>
             <CardActions>
               <Button
-                variant='contained'
                 color='primary'
                 onClick={this.handleConvert}
               >
@@ -99,14 +98,12 @@ class Item extends Component {
             </CardContent>
             <CardActions>
               <Button
-                variant='outlined'
-                color='primary'
+                color='secondary'
                 onClick={handleDeleteButton}
               >
                 Delete
               </Button>
               <Button
-                variant='contained'
                 color='primary'
                 onClick={() => {this.copyToClipboard(content)}}
               >

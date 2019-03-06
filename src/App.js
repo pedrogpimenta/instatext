@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import styles from './App.module.css';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { deepOrange, blue } from '@material-ui/core/colors';
+import {
+  teal,
+  red,
+} from '@material-ui/core/colors';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
@@ -87,8 +90,8 @@ class App extends Component {
   render() {
     const theme = createMuiTheme({
       palette: {
-        primary: deepOrange,
-        secondary: blue
+        primary: teal,
+        secondary: red
       },
     });
 
