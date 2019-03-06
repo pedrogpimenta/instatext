@@ -14,7 +14,8 @@ class SideMenu extends Component {
   render () {
     const {
       open,
-      toggleSideMenu
+      toggleSideMenu,
+      handleDeleteAll
     } = this.props;
 
     const sideList = (
@@ -22,6 +23,9 @@ class SideMenu extends Component {
         <List component='nav'>
           <ListItem button component='a' href="#about">
             <ListItemText primary="About" />
+          </ListItem>
+          <ListItem button onClick={handleDeleteAll}>
+            <ListItemText primary="Delete all content" />
           </ListItem>
         </List>
       </div>

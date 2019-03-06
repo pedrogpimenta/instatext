@@ -2,21 +2,11 @@
   min-width: 275px;
 }
 
-.bullet {
-  display: inline-block;
-  margin: 0 2px;
-  transform: scale(.8);
-}
-
-.title {
-  font-size: 14px;
-}
-
-.pos {
-  margin-bottom: 12px;
-}
-
 .cardActions {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.lineBreak {
+  white-space: pre-line;
 }

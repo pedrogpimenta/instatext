@@ -9,13 +9,15 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
+const CURRENT_ITEM_INPUT = 'currentItemInput';
+
 class Item extends Component {
   constructor(props){
     super(props)
+
     this.state = {
       id: this.props.id,
-      currentContent: '',
-      newContent: ''
+      currentContent: ''
     }
   }
 
@@ -24,15 +26,14 @@ class Item extends Component {
       [name]: event.target.value
     });
 
-    localStorage.setItem('currentItemInput', event.target.value);
+    localStorage.setItem(CURRENT_ITEM_INPUT, event.target.value);
   };
 
   handleConvert = () => {
-    const newVal = this.state.currentContent.replace(/(?:\r\n|\r|\n)/g, "\u2063\n");
+    const newVal = this.state.currentContent.replace(/(?:\r\n|\r|\n)/g, '\u2063\n');
 
     this.setState({
-      currentContent: newVal,
-      newContent: newVal
+      currentContent: newVal
     });
 
     this.copyToClipboard(newVal);
@@ -40,12 +41,10 @@ class Item extends Component {
 
   copyToClipboard = (content) => {
     clipboard(content);
-    console.log('copied');
-    console.log(content);
   }
 
   componentDidMount = () => {
-    const currentItemInput = localStorage.getItem('currentItemInput');
+    const currentItemInput = localStorage.getItem(CURRENT_ITEM_INPUT);
 
     if (!!currentItemInput) {
       this.setState({
@@ -61,9 +60,9 @@ class Item extends Component {
     } = this.props;
 
     return (
-      <>
+      <Card className={styles.card}>
         {!content &&
-          <Card className={styles.card}>
+          <>
             <CardContent>
               <TextField
                 id={this.state.id}
@@ -83,15 +82,16 @@ class Item extends Component {
                 Convert and copy to clipboard
               </Button>
             </CardActions>
-          </Card>
+          </>
         }
         {content &&
-          <Card className={styles.card}>
+          <>
             <CardContent>
               <Typography
                 color='textPrimary'
                 variant='body2'
                 gutterBottom
+                className={styles.lineBreak}
               >
                 {content}
               </Typography>
@@ -110,9 +110,9 @@ class Item extends Component {
                 Copy to clipboard
               </Button>
             </CardActions>
-          </Card>
+          </>
         }
-      </>
+      </Card>
     );
   }
 }

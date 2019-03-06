@@ -15,14 +15,17 @@ import Header from './Components/Header';
 import SideMenu from './Components/SideMenu';
 import Item from './Components/Item';
 
+const INSTA_TEXT_ITEMS = 'InstaTextItems';
+const CURRENT_ITEM_INPUT = 'currentItemInput';
+
 class App extends Component {
   constructor(props){
     super(props)
-    this.newItem = React.createRef();
 
+    this.newItem = React.createRef();
     this.state = {
       sideMenuOpen: false,
-      showNewItemInput: false,
+      showNewItemInput: true,
       items: []
     }
   }
@@ -34,57 +37,55 @@ class App extends Component {
   };
 
   handleNewButton = () => {
-    if (this.state.showNewItemInput) {
-      const instaTextLocalStorage = JSON.parse(localStorage.getItem('InstaTextItems'));
-      const instaTextItemsLength = instaTextLocalStorage ? instaTextLocalStorage : 0; 
+    const instaTextLocalStorage = JSON.parse(localStorage.getItem(INSTA_TEXT_ITEMS));
+    const instaTextItemsLength = instaTextLocalStorage ? instaTextLocalStorage : 0; 
 
-      const newItemContent = this.newItem.current.state.currentContent;
-      const items = this.state.items;
-      items.unshift({
-        id: instaTextItemsLength + 1,
-        content: newItemContent
-      });
-      localStorage.setItem('InstaTextItems', JSON.stringify(items));
-      localStorage.removeItem('currentItemInput');
+    const newItemContent = this.newItem.current.state.currentContent;
+    const items = this.state.items;
+    items.unshift({
+      id: instaTextItemsLength + 1,
+      content: newItemContent
+    });
 
-      this.setState({
-        items: items 
-      });
+    localStorage.setItem(INSTA_TEXT_ITEMS, JSON.stringify(items));
+    localStorage.removeItem(CURRENT_ITEM_INPUT);
 
-      this.newItem.current.setState(
-        {currentContent: ''
-      });
-    } else {
-      this.setState({
-        showNewItemInput: true
-      });
-    }
+    this.setState({
+      items: items 
+    });
+    this.newItem.current.setState(
+      {currentContent: ''
+    });
   };
 
   handleDeleteButton = id => {
     const items = this.state.items;
 
     const newItems = items.filter(el => {return el.id !== id});
-    localStorage.setItem('InstaTextItems', JSON.stringify(newItems));
+    localStorage.setItem(INSTA_TEXT_ITEMS, JSON.stringify(newItems));
 
     this.setState({
       items: newItems
     })
   };
 
-  componentDidMount = () => {
-    const instaTextLocalStorage = JSON.parse(localStorage.getItem('InstaTextItems'));
-    const currentItemInput = localStorage.getItem('currentItemInput');
+  handleDeleteAll = () => {
+    localStorage.removeItem(CURRENT_ITEM_INPUT);
+    localStorage.removeItem(INSTA_TEXT_ITEMS);
+    this.updateState();
+  };
 
-    if (instaTextLocalStorage) {
-      this.setState({
-        items: instaTextLocalStorage,
-      })
-    }
+  updateState = () => {
+    const instaTextLocalStorage = JSON.parse(localStorage.getItem(INSTA_TEXT_ITEMS));
+    const newItems = (instaTextLocalStorage) ? instaTextLocalStorage : [] ;
 
     this.setState({
-      showNewItemInput: !!currentItemInput
+      items: newItems
     });
+  };
+
+  componentDidMount = () => {
+    this.updateState();
   };
 
   render() {
@@ -102,7 +103,8 @@ class App extends Component {
             toggleSideMenu={this.toggleSideMenu} />
           <SideMenu
             open={this.state.sideMenuOpen}
-            toggleSideMenu={this.toggleSideMenu} />
+            toggleSideMenu={this.toggleSideMenu}
+            handleDeleteAll={this.handleDeleteAll} />
           <main className={styles.main}>
             <Grid
               container
@@ -116,7 +118,7 @@ class App extends Component {
                   ref={this.newItem}
                 />
               </Grid>
-              {(!!this.state.items || !!this.state.items.length) &&
+              {(!!this.state.items && !!this.state.items.length) &&
                 <>
                   <div className={styles.divider}>
                     <Divider
