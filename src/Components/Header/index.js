@@ -15,17 +15,17 @@ class Header extends Component {
 
     return (
       <div className={styles.root}>
-        <AppBar position="static">
+        <AppBar position='fixed'>
           <Toolbar>
             <IconButton
               className={styles.menuButton}
-              color="inherit"
-              aria-label="Menu"
+              color='inherit'
+              aria-label='Menu'
               onClick={toggleSideMenu}
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" className={styles.grow}>
+            <Typography variant='title' color='inherit' className={styles.grow}>
               InstaText
             </Typography>
           </Toolbar>
