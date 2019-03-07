@@ -48,6 +48,7 @@ class App extends Component {
     });
 
     this.copyToClipboard(newVal);
+    this.makeNewItem();
   }
 
   copyToClipboard = (content) => {
@@ -59,6 +60,10 @@ class App extends Component {
   }
 
   handleNewButton = () => {
+    this.makeNewItem();
+  };
+
+  makeNewItem = () => {
     const newItemContent = this.newItem.current.state.currentContent;
     const instaTextLocalStorage = JSON.parse(localStorage.getItem(INSTA_TEXT_ITEMS));
     const instaTextItemsLength = instaTextLocalStorage ? instaTextLocalStorage.length : 0; 
