@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styles from './index.module.css';
-import clipboard from 'clipboard-copy';
+import clipboard from 'copy-text-to-clipboard';
 
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
 import Item from '../../Components/Item';
 import Notification from '../../Components/Notification';
-import Confirm from '../../Components/Confirm';
 
 const INSTA_TEXT_ITEMS = 'InstaTextItems';
 const CURRENT_ITEM_INPUT = 'currentItemInput';
@@ -18,13 +17,11 @@ class Home extends Component {
 
     this.newItem = React.createRef();
     this.notification = React.createRef();
-    this.confirmDelete = React.createRef();
     this.state = {
       showNewItemInput: true,
       items: []
     }
   }
-
 
   handleConvertButton = () => {
     const currentContent = this.newItem.current.state.currentContent;
@@ -82,7 +79,6 @@ class Home extends Component {
 
   handleDelete = id => {
     const items = this.state.items;
-
     const newItems = items.filter(el => {return el.id !== id});
     localStorage.setItem(INSTA_TEXT_ITEMS, JSON.stringify(newItems));
 
@@ -90,8 +86,6 @@ class Home extends Component {
       items: newItems
     })
   };
-
-
 
   updateState = () => {
     const instaTextLocalStorage = JSON.parse(localStorage.getItem(INSTA_TEXT_ITEMS));
@@ -149,11 +143,6 @@ class Home extends Component {
         <Notification
           ref={this.notification}
           handleNewButton={() => {this.handleNewButton()}} />
-        <Confirm
-          ref={this.confirmDelete}
-          title='Delete all items?'
-          message='There is no way to recover deleted items.'
-          action={() => {this.handleDeleteAll()}} />
       </>
     );
   }

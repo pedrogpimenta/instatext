@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import styles from './index.module.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import Home from './pages/Home';
 import About from './pages/About';
 
 import Header from './Components/Header';
 import SideMenu from './Components/SideMenu';
+import Confirm from './Components/Confirm';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
@@ -21,6 +21,7 @@ class App extends Component {
   constructor(props){
     super(props)
 
+    this.confirmDelete = React.createRef();
     this.state = {
       sideMenuOpen: false,
     }
@@ -32,10 +33,16 @@ class App extends Component {
     });
   };
 
+  handleDeleteAllButton = id => {
+    this.confirmDelete.current.setState({
+      open: true
+    });
+  };
+
   handleDeleteAll = () => {
     localStorage.removeItem(CURRENT_ITEM_INPUT);
     localStorage.removeItem(INSTA_TEXT_ITEMS);
-    this.updateState();
+    //this.updateState();
     this.confirmDelete.current.setState({
       open: false
     });
@@ -63,11 +70,14 @@ class App extends Component {
               toggleSideMenu={this.toggleSideMenu}
               handleDeleteAllButton={this.handleDeleteAllButton} />
             <main className={styles.main}>
-
               <Route path="/" exact component={Home} />
               <Route path="/about/" exact component={About} />
-
             </main>
+          <Confirm
+            ref={this.confirmDelete}
+            title='Delete all items?'
+            message='There is no way to recover deleted items.'
+            action={() => {this.handleDeleteAll()}} />
           </div>
         </MuiThemeProvider>
       </Router>
