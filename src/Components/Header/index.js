@@ -25,7 +25,11 @@ class Header extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant='title' color='inherit' className={styles.grow}>
+            <Typography
+              variant='h6'
+              color='inherit'
+              className={styles.grow}
+            >
               InstaText
             </Typography>
           </Toolbar>

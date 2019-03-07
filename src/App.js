@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import styles from './App.module.css';
+import clipboard from 'clipboard-copy';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
   teal,
   red,
 } from '@material-ui/core/colors';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 
 import Header from './Components/Header';
 import SideMenu from './Components/SideMenu';
 import Item from './Components/Item';
+import Notification from './Components/Notification';
+import Confirm from './Components/Confirm';
 
 const INSTA_TEXT_ITEMS = 'InstaTextItems';
 const CURRENT_ITEM_INPUT = 'currentItemInput';
@@ -23,6 +24,8 @@ class App extends Component {
     super(props)
 
     this.newItem = React.createRef();
+    this.notification = React.createRef();
+    this.confirmDelete = React.createRef();
     this.state = {
       sideMenuOpen: false,
       showNewItemInput: true,
@@ -36,14 +39,32 @@ class App extends Component {
     });
   };
 
+  handleConvertButton = () => {
+    const currentContent = this.newItem.current.state.currentContent;
+    const newVal = currentContent.replace(/(?:\r\n|\r|\n)/g, '\u2063\n');
+
+    this.setState({
+      currentContent: newVal
+    });
+
+    this.copyToClipboard(newVal);
+  }
+
+  copyToClipboard = (content) => {
+    clipboard(content);
+    this.notification.current.setState({
+      open: true,
+      message: 'Copied to clipboard!'
+    });
+  }
+
   handleNewButton = () => {
     const newItemContent = this.newItem.current.state.currentContent;
+    const instaTextLocalStorage = JSON.parse(localStorage.getItem(INSTA_TEXT_ITEMS));
+    const instaTextItemsLength = instaTextLocalStorage ? instaTextLocalStorage.length : 0; 
+    const items = this.state.items;
 
     if (newItemContent.length) {
-      const instaTextLocalStorage = JSON.parse(localStorage.getItem(INSTA_TEXT_ITEMS));
-      const instaTextItemsLength = instaTextLocalStorage ? instaTextLocalStorage : 0; 
-
-      const items = this.state.items;
       items.unshift({
         id: instaTextItemsLength + 1,
         content: newItemContent
@@ -55,13 +76,19 @@ class App extends Component {
       this.setState({
         items: items 
       });
-      this.newItem.current.setState(
-        {currentContent: ''
+      this.newItem.current.setState({
+        currentContent: ''
       });
     }
   };
 
-  handleDeleteButton = id => {
+  handleDeleteAllButton = id => {
+    this.confirmDelete.current.setState({
+      open: true
+    });
+  };
+
+  handleDelete = id => {
     const items = this.state.items;
 
     const newItems = items.filter(el => {return el.id !== id});
@@ -76,6 +103,9 @@ class App extends Component {
     localStorage.removeItem(CURRENT_ITEM_INPUT);
     localStorage.removeItem(INSTA_TEXT_ITEMS);
     this.updateState();
+    this.confirmDelete.current.setState({
+      open: false
+    });
   };
 
   updateState = () => {
@@ -97,6 +127,9 @@ class App extends Component {
         primary: teal,
         secondary: red
       },
+      typography: {
+        useNextVariants: true,
+      },
     });
 
     return (
@@ -107,7 +140,7 @@ class App extends Component {
           <SideMenu
             open={this.state.sideMenuOpen}
             toggleSideMenu={this.toggleSideMenu}
-            handleDeleteAll={this.handleDeleteAll} />
+            handleDeleteAllButton={this.handleDeleteAllButton} />
           <main className={styles.main}>
             <Grid
               container
@@ -116,9 +149,9 @@ class App extends Component {
             >
               <Grid item>
                 <Item
-                  id='testest'
-                  content=''
+                  id='newItem'
                   ref={this.newItem}
+                  handleConvertButton={() => {this.handleConvertButton()}}
                 />
               </Grid>
               {(!!this.state.items && !!this.state.items.length) &&
@@ -136,7 +169,8 @@ class App extends Component {
                           <Item
                             id={item.id}
                             content={item.content}
-                            handleDeleteButton={() => {this.handleDeleteButton(item.id)}}
+                            handleDeleteButton={() => {this.handleDelete(item.id)}}
+                            handleCopyToClipboard={() => {this.copyToClipboard(item.content)}}
                           />
                         </Grid>
                       )
@@ -145,17 +179,15 @@ class App extends Component {
                 </>
               }
             </Grid>
+            <Notification
+              ref={this.notification}
+              handleNewButton={() => {this.handleNewButton()}} />
+            <Confirm
+              ref={this.confirmDelete}
+              title='Delete all items?'
+              message='There is no way to recover deleted items.'
+              action={() => {this.handleDeleteAll()}} />
           </main>
-          <div className={styles.fabHolder}>
-            <Fab
-              color='secondary'
-              aria-label='New'
-              className={styles.fab}
-              onClick={this.handleNewButton}
-            >
-              <AddIcon />
-            </Fab>
-          </div>
         </div>
       </MuiThemeProvider>
     );

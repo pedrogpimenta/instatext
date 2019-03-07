@@ -1,0 +1,10 @@
+.fab {
+  position: fixed !important;
+  bottom: 1rem;
+  right: 1rem;
+  transition: bottom .2s ease-out;
+}
+
+.open {
+  bottom: 4.3rem;
+}

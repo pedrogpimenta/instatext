@@ -5,6 +5,7 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 class SideMenu extends Component {
   state = {
@@ -15,7 +16,7 @@ class SideMenu extends Component {
     const {
       open,
       toggleSideMenu,
-      handleDeleteAll
+      handleDeleteAllButton
     } = this.props;
 
     const sideList = (
@@ -24,7 +25,8 @@ class SideMenu extends Component {
           <ListItem button component='a' href="#about">
             <ListItemText primary="About" />
           </ListItem>
-          <ListItem button onClick={handleDeleteAll}>
+          <Divider />
+          <ListItem button onClick={handleDeleteAllButton}>
             <ListItemText primary="Delete all content" />
           </ListItem>
         </List>

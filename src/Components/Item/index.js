@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styles from './index.module.css';
-import clipboard from 'clipboard-copy';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -29,20 +28,6 @@ class Item extends Component {
     localStorage.setItem(CURRENT_ITEM_INPUT, event.target.value);
   };
 
-  handleConvert = () => {
-    const newVal = this.state.currentContent.replace(/(?:\r\n|\r|\n)/g, '\u2063\n');
-
-    this.setState({
-      currentContent: newVal
-    });
-
-    this.copyToClipboard(newVal);
-  }
-
-  copyToClipboard = (content) => {
-    clipboard(content);
-  }
-
   componentDidMount = () => {
     const currentItemInput = localStorage.getItem(CURRENT_ITEM_INPUT);
 
@@ -56,7 +41,9 @@ class Item extends Component {
   render() {
     const {
       content,
-      handleDeleteButton
+      handleDeleteButton,
+      handleConvertButton,
+      handleCopyToClipboard
     } = this.props;
 
     return (
@@ -77,7 +64,7 @@ class Item extends Component {
             <CardActions>
               <Button
                 color='primary'
-                onClick={this.handleConvert}
+                onClick={handleConvertButton}
               >
                 Convert and copy to clipboard
               </Button>
@@ -105,7 +92,7 @@ class Item extends Component {
               </Button>
               <Button
                 color='primary'
-                onClick={() => {this.copyToClipboard(content)}}
+                onClick={handleCopyToClipboard}
               >
                 Copy to clipboard
               </Button>
