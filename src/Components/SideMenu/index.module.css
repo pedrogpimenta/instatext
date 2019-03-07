@@ -1,3 +1,7 @@
 .list {
   width: 250px;
 }
+
+.listItem {
+  width: auto !important;
+}
