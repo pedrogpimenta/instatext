@@ -43,8 +43,13 @@ class Home extends Component {
     });
   }
 
+  focusNewItem = () => {
+    this.newItem.current.focusInput();
+  };
+
   handleNewButton = () => {
     this.makeNewItem();
+    this.focusNewItem();
   };
 
   makeNewItem = () => {

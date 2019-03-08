@@ -14,6 +14,7 @@ class Item extends Component {
   constructor(props){
     super(props)
 
+    this.input = React.createRef();
     this.state = {
       id: this.props.id,
       currentContent: ''
@@ -38,6 +39,10 @@ class Item extends Component {
     }
   };
 
+  focusInput = () => {
+    this.input.current.focus();
+  }
+
   render() {
     const {
       content,
@@ -56,6 +61,7 @@ class Item extends Component {
                 label='Insert content'
                 multiline
                 fullWidth
+                inputRef={this.input}
                 variant='filled'
                 value={this.state.currentContent}
                 onChange={this.handleChange('currentContent')}

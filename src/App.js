@@ -22,6 +22,7 @@ class App extends Component {
     super(props)
 
     this.confirmDelete = React.createRef();
+    this.home = React.createRef();
     this.state = {
       sideMenuOpen: false,
     }
@@ -42,9 +43,12 @@ class App extends Component {
   handleDeleteAll = () => {
     localStorage.removeItem(CURRENT_ITEM_INPUT);
     localStorage.removeItem(INSTA_TEXT_ITEMS);
-    //this.updateState();
+
     this.confirmDelete.current.setState({
       open: false
+    });
+    this.home.current.setState({
+      items: [] 
     });
   };
 
@@ -70,7 +74,10 @@ class App extends Component {
               toggleSideMenu={this.toggleSideMenu}
               handleDeleteAllButton={this.handleDeleteAllButton} />
             <main className={styles.main}>
-              <Route path="/" exact component={Home} />
+              <Route path="/" exact render={() => (
+                  <Home
+                    ref={this.home} />
+                )} />
               <Route path="/about/" exact component={About} />
             </main>
           <Confirm
