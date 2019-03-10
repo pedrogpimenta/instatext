@@ -64,7 +64,7 @@ class App extends Component {
     });
 
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <MuiThemeProvider theme={theme}>
           <div className={styles.app}>
             <Header

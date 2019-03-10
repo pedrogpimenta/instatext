@@ -30,7 +30,7 @@ class Header extends Component {
               color='inherit'
               className={styles.grow}
             >
-              InstaText
+              InstaTexta
             </Typography>
           </Toolbar>
         </AppBar>
