@@ -1,13 +1,13 @@
 {
   "main.css": "/instatext/static/css/main.affe257a.chunk.css",
-  "main.js": "/instatext/static/js/main.9ef43bb9.chunk.js",
-  "main.js.map": "/instatext/static/js/main.9ef43bb9.chunk.js.map",
+  "main.js": "/instatext/static/js/main.0eb3fef6.chunk.js",
+  "main.js.map": "/instatext/static/js/main.0eb3fef6.chunk.js.map",
   "runtime~main.js": "/instatext/static/js/runtime~main.fc16f460.js",
   "runtime~main.js.map": "/instatext/static/js/runtime~main.fc16f460.js.map",
   "static/js/2.0b555523.chunk.js": "/instatext/static/js/2.0b555523.chunk.js",
   "static/js/2.0b555523.chunk.js.map": "/instatext/static/js/2.0b555523.chunk.js.map",
   "index.html": "/instatext/index.html",
-  "precache-manifest.7d0628331bccb70f93f9c695dd30cbd0.js": "/instatext/precache-manifest.7d0628331bccb70f93f9c695dd30cbd0.js",
+  "precache-manifest.5ebdcdfb6d882fb141a8424140387fcf.js": "/instatext/precache-manifest.5ebdcdfb6d882fb141a8424140387fcf.js",
   "service-worker.js": "/instatext/service-worker.js",
   "static/css/main.affe257a.chunk.css.map": "/instatext/static/css/main.affe257a.chunk.css.map"
 }
