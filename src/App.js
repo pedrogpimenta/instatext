@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styles from './index.module.css';
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import ReactGA from 'react-ga';
+
 import Home from './pages/Home';
 import About from './pages/About';
 
@@ -16,6 +19,9 @@ import {
 
 const INSTA_TEXT_ITEMS = 'InstaTextItems';
 const CURRENT_ITEM_INPUT = 'currentItemInput';
+
+ReactGA.initialize('UA-135968612-2');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends Component {
   constructor(props){
