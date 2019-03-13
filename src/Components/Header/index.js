@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { ReactComponent as Logo } from '../../instatext-logo.svg';
+
 class Header extends Component {
   render() {
     const {
@@ -14,7 +16,7 @@ class Header extends Component {
     } = this.props;
 
     return (
-      <div className={styles.root}>
+      <>
         <AppBar position='fixed'>
           <Toolbar>
             <IconButton
@@ -25,16 +27,14 @@ class Header extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              variant='h6'
-              color='inherit'
-              className={styles.grow}
+            <div
+              className={styles.logo}
             >
-              InstaText
-            </Typography>
+              <Logo /> 
+            </div>
           </Toolbar>
         </AppBar>
-      </div>
+      </>
     );
   }
 }

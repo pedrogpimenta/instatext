@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './index.module.css';
+import styles from './App.module.css';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ReactGA from 'react-ga';

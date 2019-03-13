@@ -10,3 +10,20 @@
   margin-left: -12px;
   margin-right: 20px;
 }
+
+.logo {
+  width: 6rem;
+}
+
+.logo svg {
+  max-width: 100%;
+  height: auto;
+  fill: #ffffff;
+  position: relative;
+  top: 1px;
+}
+
+.logo svg g,
+.logo svg path {
+  fill: #ffffff;
+}
