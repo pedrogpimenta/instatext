@@ -123,6 +123,9 @@ class Home extends Component {
           {(!!this.state.items && !!this.state.items.length) &&
             <>
               <div className={styles.divider}>
+                <span className={styles.dividerText}>
+                  Older entries
+                </span>
                 <Divider
                   variant="middle" />
               </div>

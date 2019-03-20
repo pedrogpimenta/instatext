@@ -29,6 +29,21 @@
 }
 
 .divider {
+  position: relative;
   margin: 1rem 0;
 }
 
+.dividerText {
+  display: block;
+  position: absolute;
+  top: -.5rem;
+  left: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  background: #eee;
+  transform: translateX(-50%);
+  padding: 0 0.6rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #a7a2a2;
+}
