@@ -15,7 +15,7 @@ function Content(props) {
   })
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <Route path="/" exact render={() => (
+      <Route path="/" render={() => (
           <App />
         )} />
     </Router>
