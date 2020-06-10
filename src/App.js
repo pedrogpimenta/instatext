@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './App.module.css';
 
-import { BrowserRouter as Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import ReactGA from 'react-ga';
 
 import Home from './pages/Home';
@@ -71,28 +71,30 @@ class App extends Component {
     });
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <div className={styles.app}>
-          <Header
-            toggleSideMenu={this.toggleSideMenu} />
-          <SideMenu
-            open={this.state.sideMenuOpen}
-            toggleSideMenu={this.toggleSideMenu}
-            handleDeleteAllButton={this.handleDeleteAllButton} />
-          <main className={styles.main}>
-            <Route path="/" exact render={() => (
-                <Home
-                  ref={this.home} />
-              )} />
-            <Route path="/about/" exact component={About} />
-          </main>
-        <Confirm
-          ref={this.confirmDelete}
-          title='Delete all items?'
-          message='There is no way to recover deleted items.'
-          action={() => {this.handleDeleteAll()}} />
-        </div>
-      </MuiThemeProvider>
+      <Router>
+        <MuiThemeProvider theme={theme}>
+          <div className={styles.app}>
+            <Header
+              toggleSideMenu={this.toggleSideMenu} />
+            <SideMenu
+              open={this.state.sideMenuOpen}
+              toggleSideMenu={this.toggleSideMenu}
+              handleDeleteAllButton={this.handleDeleteAllButton} />
+            <main className={styles.main}>
+              <Route path="/" exact render={() => (
+                  <Home
+                    ref={this.home} />
+                )} />
+              <Route path="/about/" exact component={About} />
+            </main>
+          <Confirm
+            ref={this.confirmDelete}
+            title='Delete all items?'
+            message='There is no way to recover deleted items.'
+            action={() => {this.handleDeleteAll()}} />
+          </div>
+        </MuiThemeProvider>
+      </Router>
     )
   }
 }

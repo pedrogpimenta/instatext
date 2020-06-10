@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import useAckee from 'use-ackee';
 
 import App from './App';
@@ -15,7 +15,9 @@ function Content(props) {
   })
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <App />
+      <Route path="/" exact render={() => (
+          <App />
+        )} />
     </Router>
   )
 }
